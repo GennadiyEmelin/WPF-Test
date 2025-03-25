@@ -5,9 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Сотрудники" Height="450" Width="800">
     <Grid>
-        <TextBlock Name="TextBlock"  HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="18" Width="206"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Имя:" VerticalAlignment="Top" Height="18" Width="54"/>
+        <TextBox Name="workerName" HorizontalAlignment="Left" Margin="130,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,33,0,0" TextWrapping="Wrap" Text="Фамилия:" VerticalAlignment="Top"/>
+        <TextBox Name="workerSurname" HorizontalAlignment="Left" Margin="130,31,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,54,0,0" TextWrapping="Wrap" Text="Возраст:" VerticalAlignment="Top" Width="72"/>
+        <TextBox Name="workerAge" HorizontalAlignment="Left" Margin="130,52,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,75,0,0" TextWrapping="Wrap" Text="Зарплата:" VerticalAlignment="Top" Width="72"/>
+        <TextBox Name="workerSalary" HorizontalAlignment="Left" Margin="130,73,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,96,0,0" TextWrapping="Wrap" Text="Департамент:" VerticalAlignment="Top" Width="88"/>
+        <TextBox Name="workerDepartment" HorizontalAlignment="Left" Margin="130,94,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,117,0,0" TextWrapping="Wrap" Text="Должность:" VerticalAlignment="Top" Width="88"/>
+        <TextBox Name="workerPost" HorizontalAlignment="Left" Margin="130,115,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,138,0,0" TextWrapping="Wrap" Text="Номер телефона:" VerticalAlignment="Top" Width="111"/>
+        <TextBox Name="workerPhoneNumber" HorizontalAlignment="Left" Margin="130,136,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,159,0,0" TextWrapping="Wrap" Text="Паспорт:" VerticalAlignment="Top" Width="105"/>
+        <TextBox Name="workerPassport" HorizontalAlignment="Left" Margin="130,157,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Записать" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Width="98" Click="AddWorker"/>
+        <DataGrid Name="DataDB" Margin="271,10,10,10" SelectionChanged="DataGrid_SelectionChanged" AutoGenerateColumns="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Имя" Width="90"/>
+                <DataGridTextColumn Binding="{Binding Surname}" Header="Фамилия" Width="90"/>
+                <DataGridTextColumn Binding="{Binding Age}" Header="Возраст" Width="70"/>
+                <DataGridTextColumn Binding="{Binding Salary}" Header="Зарплата" Width="70"/>
+                <DataGridTextColumn Binding="{Binding Department}" Header="Департамент" Width="100"/>
+                <DataGridTextColumn Binding="{Binding Post}" Header="Должность" Width="90"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </Window>
