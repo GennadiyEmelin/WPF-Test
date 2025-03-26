@@ -24,9 +24,14 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,159,0,0" TextWrapping="Wrap" Text="Паспорт:" VerticalAlignment="Top" Width="105"/>
         <TextBox Name="workerPassport" HorizontalAlignment="Left" Margin="130,157,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Button Content="Записать" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Width="98" Click="AddWorker"/>
-        <DataGrid x:Name="gridView" Margin="271,10,10,10" >
+        <DataGrid x:Name="gridView" Margin="271,10,10,10" 
+                  IsSynchronizedWithCurrentItem="True"
+                  SelectionMode="Single"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding}"
+                  IsReadOnly="False">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name = "Id"  Binding="{Binding Id}" Header="Id" Width="30"/>
+                <DataGridTextColumn x:Name="Id"  Binding="{Binding Id}" Header="Id" Width="30"/>
                 <DataGridTextColumn x:Name="Name" Binding="{Binding Name}" Header="Имя" Width="90"/>
                 <DataGridTextColumn x:Name="Surname" Binding="{Binding Surname}" Header="Фамилия" Width="90"/>
                 <DataGridTextColumn x:Name="Age" Binding="{Binding Age}" Header="Возраст" Width="70"/>
