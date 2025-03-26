@@ -60,10 +60,8 @@ namespace WPF
                 sqlConnection.Close();
             }
         }
-        /// <summary>
-        /// Чтение из БД
-        /// </summary>
-        public void SetSQL()
+
+        public void UpdateID()
         {
             SqlConnectionStringBuilder strCon = new SqlConnectionStringBuilder()
             {
@@ -81,11 +79,30 @@ namespace WPF
                 $"в состоянии: {(s as SqlConnection).State}");
             };
 
-            try // Попытка открыть и читать
+            try // Попытка открыть и запись
             {
                 sqlConnection.Open();
-                string sql = $@"SELECT * FROM [Table]";
+                var sql = @"INSERT INTO reservTable (Name, Surname, Age, Salary, Department, Post, PhoneNumber, Passport) 
+                    SELECT name, Surname, Age, Salary, Department, Post, PhoneNumber, Passport 
+                    FROM [Table] ORDER BY Id ASC;;";
                 SqlCommand command = new SqlCommand(sql, sqlConnection);
+                command.ExecuteNonQuery();
+                sql = @"DELETE FROM [Table];";
+                command = new SqlCommand(sql, sqlConnection);
+                command.ExecuteNonQuery();
+                sql = @"DBCC CHECKIDENT ('[Table]', RESEED, 0);";
+                command = new SqlCommand(sql, sqlConnection);
+                command.ExecuteNonQuery();
+                sql = @"INSERT INTO [Table] (Name, Surname, Age, Salary, Department, Post, PhoneNumber, Passport) 
+                    SELECT name, Surname, Age, Salary, Department, Post, PhoneNumber, Passport 
+                    FROM [reservTable] ORDER BY Id ASC;";
+                command = new SqlCommand(sql, sqlConnection);
+                command.ExecuteNonQuery();
+                sql = @"DELETE FROM reservTable";
+                command = new SqlCommand(sql, sqlConnection);
+                command.ExecuteNonQuery();
+                sql = @"DBCC CHECKIDENT ('reservTable', RESEED, 0);";
+                command = new SqlCommand(sql, sqlConnection);
                 command.ExecuteNonQuery();
             }
             catch (Exception e)
@@ -97,6 +114,7 @@ namespace WPF
             {
                 sqlConnection.Close();
             }
+
         }
     }
 }

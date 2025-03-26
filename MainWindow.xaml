@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF"
         mc:Ignorable="d"
-        Title="Сотрудники" Height="450" Width="800">
+        Title="Сотрудники" Height="600" Width="1050">
     <Grid>
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Имя:" VerticalAlignment="Top" Height="18" Width="54"/>
         <TextBox Name="workerName" HorizontalAlignment="Left" Margin="130,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
@@ -29,16 +29,29 @@
                   SelectionMode="Single"
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding}"
-                  IsReadOnly="False">
+                  IsReadOnly="False"
+                  CurrentCellChanged="GVCurrentCellChanged"
+                  CellEditEnding="GVCellEditEnding"   >
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="Id"  Binding="{Binding Id}" Header="Id" Width="30"/>
+                <DataGridTextColumn x:Name="Id"  Binding="{Binding Id}" Header="Id" Width="40"/>
                 <DataGridTextColumn x:Name="Name" Binding="{Binding Name}" Header="Имя" Width="90"/>
                 <DataGridTextColumn x:Name="Surname" Binding="{Binding Surname}" Header="Фамилия" Width="90"/>
                 <DataGridTextColumn x:Name="Age" Binding="{Binding Age}" Header="Возраст" Width="70"/>
                 <DataGridTextColumn x:Name="Salary" Binding="{Binding Salary}" Header="Зарплата" Width="70"/>
                 <DataGridTextColumn x:Name="Department" Binding="{Binding Department}" Header="Департамент" Width="100"/>
                 <DataGridTextColumn x:Name="Post" Binding="{Binding Post}" Header="Должность" Width="80"/>
+                <DataGridTextColumn x:Name="PhoneNumber" Binding="{Binding PhoneNumber}" Header="Номер телефона" Width="120"/>
+                <DataGridTextColumn x:Name="Passport" Binding="{Binding Passport}" Header="Паспорт" Width="90"/>
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>       
+                    <MenuItem Header="Удалить" Click="MenuItemDeleteClick"/>
+                    <Separator/>
+                    <MenuItem Header="Обновить" Click="MenuItemUpdateClick"/>
+                    <Separator/>
+                    <MenuItem Header="Упорядочить ID" Click="MenuItemUpdateID"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
 
     </Grid>

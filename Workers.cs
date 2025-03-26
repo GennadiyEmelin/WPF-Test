@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace WPF
 {
+    /// <summary>
+    /// Структура данных 
+    /// </summary>
     struct Workers
     {
         public string Name {  get; set; }

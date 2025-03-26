@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
 using System.Data;
+using System.Runtime.CompilerServices;
 
 namespace WPF
 {
@@ -44,6 +45,11 @@ namespace WPF
             Preparing();
         }
 
+        /// <summary>
+        /// Добавить в Базу данных
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddWorker(object sender, RoutedEventArgs e)
         {
             _name = workerName.Text;
@@ -87,16 +93,20 @@ namespace WPF
             da.InsertCommand.Parameters.Add("@Salary", SqlDbType.Int, 10, "Salary");
             da.InsertCommand.Parameters.Add("@Department", SqlDbType.NVarChar, 50, "Department");
             da.InsertCommand.Parameters.Add("@Post", SqlDbType.NVarChar, 50, "Post");
+            da.InsertCommand.Parameters.Add("@PhoneNumber", SqlDbType.NVarChar, 50, "PhoneNumber");
+            da.InsertCommand.Parameters.Add("@Passport", SqlDbType.NVarChar, 50, "Passport");
             #endregion
 
             #region UPDATE
             sql = @"UPDATE [Table] SET  
-                      Name = @Name
-                      Surname = @Surname
-                      Age = @Age
-                      Salary = @Salary
-                      Department = @Department
-                      Post = @Post
+                      Name = @Name,
+                      Surname = @Surname,
+                      Age = @Age,
+                      Salary = @Salary,
+                      Department = @Department,
+                      Post = @Post,
+                      PhoneNumber = @PhoneNumber,
+                      Passport = @Passport
                      WHERE Id = @Id";
             da.UpdateCommand = new SqlCommand(sql, con);
             da.UpdateCommand.Parameters.Add("@Id", SqlDbType.Int, 0, "Id").SourceVersion = DataRowVersion.Original;
@@ -106,6 +116,8 @@ namespace WPF
             da.UpdateCommand.Parameters.Add("@Salary", SqlDbType.Int, 10, "Salary");
             da.UpdateCommand.Parameters.Add("@Department", SqlDbType.NVarChar, 50, "Department");
             da.UpdateCommand.Parameters.Add("@Post", SqlDbType.NVarChar, 50, "Post");
+            da.UpdateCommand.Parameters.Add("@PhoneNumber", SqlDbType.NVarChar, 50, "PhoneNumber");
+            da.UpdateCommand.Parameters.Add("@Passport", SqlDbType.NVarChar, 50, "Passport");
 
             #endregion
 
@@ -117,9 +129,55 @@ namespace WPF
 
             #endregion
 
-
             da.Fill(dt);
             gridView.DataContext = dt.DefaultView;
+        }
+
+        /// <summary>
+        /// Начало редактирования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GVCellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            row = (DataRowView)gridView.SelectedItem;
+            row.BeginEdit();
+            da.Update(dt);
+        }
+
+        /// <summary>
+        /// Изменение после редактирования
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GVCurrentCellChanged(object sender, EventArgs e)
+        {
+            if (row == null) return;
+            row.EndEdit();
+            da.Update(dt);
+        }
+
+        /// <summary>
+        /// Кнопка удалить
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItemDeleteClick(object sender, RoutedEventArgs e)
+        {
+            row = (DataRowView)gridView.SelectedItem;
+            row.Row.Delete();
+            da.Update(dt);
+        }
+
+        private void MenuItemUpdateClick(object sender, RoutedEventArgs e)
+        {
+            Preparing();
+        }
+
+        private void MenuItemUpdateID(object sender, EventArgs e)
+        {
+            _MSSQL.UpdateID();
+            Preparing();
         }
     }
 }
