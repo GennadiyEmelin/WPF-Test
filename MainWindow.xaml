@@ -49,7 +49,7 @@
                     <Separator/>
                     <MenuItem Header="Обновить" Click="MenuItemUpdateClick"/>
                     <Separator/>
-                    <MenuItem Header="Упорядочить ID" Click="MenuItemUpdateID"/>
+                    <MenuItem Header="Упорядочить ID" Click="MenuItemUpdateID  "/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>

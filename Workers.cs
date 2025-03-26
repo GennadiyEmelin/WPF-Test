@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace WPF
 {
     /// <summary>
-    /// Структура данных 
+    /// Структура данных на случайный случай из случайности)
     /// </summary>
     struct Workers
     {

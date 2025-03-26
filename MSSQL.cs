@@ -61,6 +61,9 @@ namespace WPF
             }
         }
 
+        /// <summary>
+        /// Наводит порядок в ID после удаления каких либо данных
+        /// </summary>
         public void UpdateID()
         {
             SqlConnectionStringBuilder strCon = new SqlConnectionStringBuilder()

@@ -64,6 +64,16 @@ namespace WPF
             workers.Add(new Workers(_name,_surname,_age,_salary,_department,_post,_phoneNumber,_passport));
             _MSSQL.AddSQL(_name,_surname,_age,_salary,_department,_post,_phoneNumber,_passport);
             MessageBox.Show("Данные записаны.");
+
+            //Очистка полей после записи
+            workerName.Text = "";
+            workerSurname.Text = "";
+            workerAge.Text = "";
+            workerSalary.Text = "";
+            workerDepartment.Text = "";
+            workerPost.Text = "";
+            workerPhoneNumber.Text = "";
+            workerPassport.Text = "";
         }
 
         private void Preparing()
