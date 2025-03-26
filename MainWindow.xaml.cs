@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace WPF
 {
@@ -32,9 +33,15 @@ namespace WPF
         string _phoneNumber;
         string _passport;
 
+        SqlConnection con;
+        SqlDataAdapter da;
+        DataTable dt;
+        DataRowView row;
+
         public MainWindow()
         {
             InitializeComponent();
+            Preparing();
         }
 
         private void AddWorker(object sender, RoutedEventArgs e)
@@ -52,9 +59,67 @@ namespace WPF
             _MSSQL.AddSQL(_name,_surname,_age,_salary,_department,_post,_phoneNumber,_passport);
             MessageBox.Show("Данные записаны.");
         }
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private void Preparing()
         {
-            
+            var connectionStringBuilder = new SqlConnectionStringBuilder() 
+            {
+                DataSource = @"(localdb)\MSSQLLocalDB", // Данные от БД
+                InitialCatalog = "WorkersDB",
+                IntegratedSecurity = true
+            };
+            con = new SqlConnection(connectionStringBuilder.ConnectionString);
+            dt = new DataTable();
+
+            da = new SqlDataAdapter();
+            var sql = @"SELECT * FROM [Table] Order By [Table].Id";
+            da.SelectCommand = new SqlCommand(sql, con);
+
+            #region INSERT
+            sql = @"INSERT INTO [Table](Name, Surname, Age, Salary, Department, Post, PhoneNumber, Passport)
+                          VALUES (@Name, @Surname, @Age, @Salary, @Department, @Post, @PhoneNumber, @Passport);
+                   SET @Id = @@IDENTITY;";
+            da.InsertCommand = new SqlCommand(sql, con);
+            da.InsertCommand.Parameters.Add("@Id",SqlDbType.Int, 4, "Id").Direction = ParameterDirection.Output;
+            da.InsertCommand.Parameters.Add("@Name", SqlDbType.NVarChar, 50, "Name");
+            da.InsertCommand.Parameters.Add("@Surname", SqlDbType.NVarChar, 50, "Surname");
+            da.InsertCommand.Parameters.Add("@Age", SqlDbType.Int, 4, "Age");
+            da.InsertCommand.Parameters.Add("@Salary", SqlDbType.Int, 10, "Salary");
+            da.InsertCommand.Parameters.Add("@Department", SqlDbType.NVarChar, 50, "Department");
+            da.InsertCommand.Parameters.Add("@Post", SqlDbType.NVarChar, 50, "Post");
+            #endregion
+
+            #region UPDATE
+            sql = @"UPDATE [Table] SET  
+                      Name = @Name
+                      Surname = @Surname
+                      Age = @Age
+                      Salary = @Salary
+                      Department = @Department
+                      Post = @Post
+                     WHERE Id = @Id";
+            da.UpdateCommand = new SqlCommand(sql, con);
+            da.UpdateCommand.Parameters.Add("@Id", SqlDbType.Int, 0, "Id").SourceVersion = DataRowVersion.Original;
+            da.UpdateCommand.Parameters.Add("@Name", SqlDbType.NVarChar, 50, "Name");
+            da.UpdateCommand.Parameters.Add("@Surname", SqlDbType.NVarChar, 50, "Surname");
+            da.UpdateCommand.Parameters.Add("@Age", SqlDbType.Int, 4, "Age");
+            da.UpdateCommand.Parameters.Add("@Salary", SqlDbType.Int, 10, "Salary");
+            da.UpdateCommand.Parameters.Add("@Department", SqlDbType.NVarChar, 50, "Department");
+            da.UpdateCommand.Parameters.Add("@Post", SqlDbType.NVarChar, 50, "Post");
+
+            #endregion
+
+            #region DELETE
+            sql = @"DELETE FROM [Table] WHERE Id = @Id";
+
+            da.DeleteCommand = new SqlCommand(sql, con);
+            da.DeleteCommand.Parameters.Add("@Id", SqlDbType.Int, 4, "Id");
+
+            #endregion
+
+
+            da.Fill(dt);
+            gridView.DataContext = dt.DefaultView;
         }
     }
 }

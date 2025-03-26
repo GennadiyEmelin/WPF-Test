@@ -24,14 +24,15 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,159,0,0" TextWrapping="Wrap" Text="Паспорт:" VerticalAlignment="Top" Width="105"/>
         <TextBox Name="workerPassport" HorizontalAlignment="Left" Margin="130,157,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Button Content="Записать" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Width="98" Click="AddWorker"/>
-        <DataGrid Name="DataDB" Margin="271,10,10,10" SelectionChanged="DataGrid_SelectionChanged" AutoGenerateColumns="True">
+        <DataGrid x:Name="gridView" Margin="271,10,10,10" >
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name}" Header="Имя" Width="90"/>
-                <DataGridTextColumn Binding="{Binding Surname}" Header="Фамилия" Width="90"/>
-                <DataGridTextColumn Binding="{Binding Age}" Header="Возраст" Width="70"/>
-                <DataGridTextColumn Binding="{Binding Salary}" Header="Зарплата" Width="70"/>
-                <DataGridTextColumn Binding="{Binding Department}" Header="Департамент" Width="100"/>
-                <DataGridTextColumn Binding="{Binding Post}" Header="Должность" Width="90"/>
+                <DataGridTextColumn x:Name = "Id"  Binding="{Binding Id}" Header="Id" Width="30"/>
+                <DataGridTextColumn x:Name="Name" Binding="{Binding Name}" Header="Имя" Width="90"/>
+                <DataGridTextColumn x:Name="Surname" Binding="{Binding Surname}" Header="Фамилия" Width="90"/>
+                <DataGridTextColumn x:Name="Age" Binding="{Binding Age}" Header="Возраст" Width="70"/>
+                <DataGridTextColumn x:Name="Salary" Binding="{Binding Salary}" Header="Зарплата" Width="70"/>
+                <DataGridTextColumn x:Name="Department" Binding="{Binding Department}" Header="Департамент" Width="100"/>
+                <DataGridTextColumn x:Name="Post" Binding="{Binding Post}" Header="Должность" Width="80"/>
             </DataGrid.Columns>
         </DataGrid>
 
